@@ -8,19 +8,19 @@ class autoencoder(nn.Module):
         super().__init__()
         self.loss_func = nn.MSELoss()
         self.encoder = torch.nn.Sequential(
-            nn.Conv3d(1, 16, 3, stride=2,padding=1),  #,stride=2
+            nn.Conv3d(1, 16, 3, padding=1)
             nn.ReLU(),
             nn.MaxPool3d(2),
-            nn.Conv3d(16, 32, 3,stride=2,padding=1),
+            nn.Conv3d(16, 32, 3,padding=1),
             nn.ReLU(),
             nn.MaxPool3d(2),
-            nn.Conv3d(32, 32, 2, stride=2),
+            nn.Conv3d(32, 32, 3,padding=1),
             nn.ReLU()
             nn.MaxPool3d(2)
         )
         
         self.decoder = torch.nn.Sequential(
-            nn.ConvTranspose3d(32, 32, 2,stride=2),
+            nn.ConvTranspose3d(32, 32, 3,stride=2,output_padding=1, padding=1),
             nn.ReLU(),
             nn.ConvTranspose3d(32, 16, 3,stride=2,output_padding=1, padding=1),
             nn.ReLU(),
